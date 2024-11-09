@@ -56,7 +56,7 @@ function MyTrips() {
           <Search className='absolute left-3 top-2.5 text-gray-400 h-5 w-5' />
         </div>
       </div>
-      <div className='grid grid-cols-2 mt-10 md:grid-cols-3 gap-5'>
+      <div className='grid grid-cols-2 mt-10 md:grid-cols-4 gap-5'>
         {filteredTrips.length > 0 
           ? filteredTrips.map((trip, index) => (
               <UserTripCard 

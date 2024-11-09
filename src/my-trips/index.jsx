@@ -68,11 +68,12 @@ function MyTrips() {
             ? <div className="col-span-full text-center py-10">
                 <p className="text-gray-500">No destinations found matching "{searchTerm}"</p>
               </div>
-            : [1, 2, 3, 4, 5, 6].map((item, index) => (
+            : [1, 2, 3, 4, 5, 6 ,7,8].map((item, index) => (
                 <div 
                   key={index} 
-                  className='h-[300px] w-[300px] bg-slate-200 animate-pulse rounded-xl'
-                />
+                  className='h-[250px] w-[220px] bg-slate-200 animate-pulse rounded-xl flex flex-col justify-center text-center'
+                ><p>No data available bro 😲</p>
+                </div>
               ))
         }
       </div>

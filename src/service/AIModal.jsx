@@ -22,20 +22,6 @@ export const chatSession = model.startChat({
             role: "user",
             parts: [
                 {
-                    // text: `Generate a travel plan for Location: Las Vegas for 3 days for a couple with a budget-friendly focus.
-                    // Provide a list of hotel options with the following details for each hotel:
-                    // - hotelName, hotelAddress, price, hotelImageUrl, geoCoordinates, rating, description, 
-                    // - the best time to visit (bestTimeToVisit).
-
-                    // Additionally, create a structured itinerary with day-wise plans. For each day, include a balanced schedule with morning, afternoon, and evening activities. Each time slot should include:
-                    // - day, title, placeName, **placeAddress**, placeDetails, placeImageUrl, geoCoordinates, 
-                    // - ticketPricing, rating, timeToTravel, bestTime, and timeRange (use formats like "09:00 AM - 11:00 AM" for morning, "1:00 PM - 3:00 PM" for afternoon, and "7:00 PM - 9:00 PM" for evening).
-
-                    // Ensure the following:
-                    // - Every day includes a morning, afternoon, and evening time slot with distinct activities.
-                    // - Each activity includes the 'placeAddress' field in the response, and the timeRange is provided as a specific time interval.
-                    // - Format the response in JSON.`
-
                     text: `Generate a detailed travel plan for Location: Las Vegas for 3 days for a couple with a budget-friendly focus. 
 
 Provide a list of hotel options with the following details:
@@ -49,6 +35,7 @@ Additionally, create an itinerary with day-wise plans, ensuring consistency acro
                     - Every day includes a morning, afternoon, and evening time slot with distinct activities.
                     - Each activity includes the 'placeAddress' field in the response, and the timeRange is provided as a specific time interval.
                     - 'placeAddress', 'timeToTravel', 'rating', and 'ticketPricing' fields have meaningful, non-empty values across all entries in the itinerary.
+                    - Use the local currency for 'price' and 'ticketPricing' based on the location (e.g., USD for the United States, EUR for Europe).
                     - Format the response in JSON.`
 
                 },

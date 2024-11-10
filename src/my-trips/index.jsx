@@ -41,8 +41,13 @@ function MyTrips() {
     });
   };
 
+  // Callback function to remove deleted trip from the state
+  const handleDelete = (tripId) => {
+    setUserTrips(prevTrips => prevTrips.filter(trip => trip.id !== tripId));
+  };
+
   return (
-    <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10'>
+    <div className='sm:px-10 md:px-40 lg:px-87 xl:px-92 px-5 mt-10'>
       <div className='flex justify-between items-center mb-8'>
         <h2 className='font-bold text-3xl'>My Trips</h2>
         <div className='relative'>
@@ -56,12 +61,13 @@ function MyTrips() {
           <Search className='absolute left-3 top-2.5 text-gray-400 h-5 w-5' />
         </div>
       </div>
-      <div className='grid grid-cols-2 mt-10 md:grid-cols-4 gap-5'>
+      <div className='grid grid-cols-2 mt-10 md:grid-cols-4 gap-5 border-black'>
         {filteredTrips.length > 0 
           ? filteredTrips.map((trip, index) => (
               <UserTripCard 
                 trip={trip} 
                 key={index}
+                onDelete={() => handleDelete(trip.id)} // Pass handleDelete callback to UserTripCard
               />
             ))
           : searchTerm 

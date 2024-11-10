@@ -41,8 +41,8 @@ function UserTripCard({ trip, onDelete }) {
   };
 
   return (
-    <div className='border rounded-xl p-3 mt-2 cursor-pointer hover:shadow-md'>
-      <img src={photoUrl ? photoUrl : '/placeholder.jpg'} alt="" className='h-[270px] w-[330px] object-cover rounded-xl' />
+    <div className='flex flex-col items-center justify-center border rounded-xl p-3 mt-2 cursor-pointer hover:shadow-md'>
+      <img src={photoUrl ? photoUrl : '/placeholder.jpg'} alt="" className='h-[270px] w-[350px] object-cover rounded-xl' />
 
       <div>
         <h2 className='text-2xl mt-2 text-black'>{trip?.userSelection?.location?.label}</h2>
@@ -50,14 +50,16 @@ function UserTripCard({ trip, onDelete }) {
           {trip?.userSelection.noOfDays} Days trip with {trip?.userSelection?.budget} budget
         </h2>
 
-        <Link to={'/view-trip/' + trip?.id}>
-          <Button className="mt-5 bg-[#7139f4] hover:bg-[#45278b]">
-            <FaArrowTrendUp /> Trip Details
+        {/* <div className='flex flex-row items-center justify-center'> */}
+          <Link to={'/view-trip/' + trip?.id}>
+            <Button className="mt-5 w-[150px] bg-[#7139f4] hover:bg-[#45278b]">
+              <FaArrowTrendUp /> Trip Details
+            </Button>
+          </Link>
+          <Button onClick={handleDeleteClick}  className="mt-5 ml-3 w-[150px] bg-red-600 hover:bg-red-800 hover:border-white">
+            <MdDelete /> Delete Trip
           </Button>
-        </Link>
-        <Button onClick={handleDeleteClick} className="ml-3 bg-red-600 hover:bg-red-800 hover:border-white">
-          <MdDelete /> Delete Trip
-        </Button>
+        {/* </div> */}
       </div>
     </div>
   );

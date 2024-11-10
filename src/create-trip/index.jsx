@@ -126,7 +126,7 @@ function CreateTrip() {
             <div className="space-y-8 w-full">
                 <div className='flex flex-row justify-center gap-20'>
                     <div>
-                        <h2 className="text-xl mb-3 font-medium text-gray-800">If you could escape anywhere right now, where would it be?</h2>
+                        <h2 className="text-lg mb-3 font-medium text-gray-800">If you could escape anywhere right now, where would it be?</h2>
                         <GooglePlacesAutocomplete
                             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
                             selectProps={{
@@ -137,7 +137,7 @@ function CreateTrip() {
                     </div>
 
                     <div>
-                        <h2 className="text-xl mb-3 font-medium text-gray-800">How many days are you ready to leave your worries behind?</h2>
+                        <h2 className="text-lg mb-3 font-medium text-gray-800">How many days are you ready to leave your worries behind?</h2>
                         <Input 
                             placeholder="Up to 15 days"
                             type="number"
@@ -149,7 +149,7 @@ function CreateTrip() {
                 </div>
 
                 <div>
-                    <h2 className="text-xl mb-3 font-medium text-gray-800">What’s your budget for this trip? Don’t worry, our AI won’t spill the beans to your wallet!</h2>
+                    <h2 className="text-lg mb-3 font-medium text-gray-800">What’s your budget for this trip? Don’t worry, our AI won’t spill the beans to your wallet!</h2>
                     <div className="grid grid-cols-3 gap-4">
                         {SelectBudgetOptions.map((item, index) => (
                             <div
@@ -166,7 +166,7 @@ function CreateTrip() {
                 </div>
 
                 <div>
-                    <h2 className="text-xl mb-3 font-medium text-gray-800">Who will be your partner(s) in crime on this adventure?</h2>
+                    <h2 className="text-lg mb-3 font-medium text-gray-800">Who will be your partner(s) in crime on this adventure?</h2>
                     <div className="grid grid-cols-4 gap-4">
                         {SelectTravelesList.map((item, index) => (
                             <div

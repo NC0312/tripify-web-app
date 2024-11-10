@@ -41,12 +41,12 @@ function Hero() {
         </p>
 
         <Link to={'/create-trip'}>
-          <Button>Start Your Adventure!</Button>
+          <Button className="bg-[#7139f4] hover:bg-[#4a2997]">Start Your Adventure!</Button>
         </Link>
       </div>
 
       <div className='relative flex flex-col items-center justify-center mt-7'>
-        <div className='relative w-[650px] h-[350px] overflow-hidden rounded-xl'>
+        <div className='relative w-[650px] h-[350px] overflow-hidden rounded-xl border border-gray-400 p-3 hover:shadow-md'>
           <img
             src={images[currentIndex]}
             alt={`Slide ${currentIndex + 1}`}
@@ -54,7 +54,7 @@ function Hero() {
           />
         </div>
 
-        <div className='absolute flex items-center justify-between w-full top-1/2 transform -translate-y-1/2 px-4'>
+        <div className='absolute flex items-center justify-around w-full top-1/2 transform -translate-y-1/2 px-4'>
           <button
             onClick={handlePrev}
             className='bg-white p-2 rounded-full shadow-lg text-[#7139f4] hover:bg-gray-200 focus:outline-none'

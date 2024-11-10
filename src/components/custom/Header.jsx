@@ -92,7 +92,7 @@ function Header() {
                 </Popover>
               </div>
             ) : (
-              <Button onClick={() => setOpenDailog(true)}>Sign In</Button>
+              <Button className="bg-[#7139f4] hover:bg-[#4a2997]" onClick={() => setOpenDailog(true)}>Sign In</Button>
             )
           }
         </div>

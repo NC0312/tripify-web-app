@@ -18,6 +18,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '@/service/firebaseConfig';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
+import { SiGooglegemini } from "react-icons/si";
 
 function CreateTrip() {
     const [place, setPlace] = useState(null);
@@ -138,7 +139,7 @@ function CreateTrip() {
 
                     <div>
                         <h2 className="text-lg mb-3 font-medium text-gray-800">How many days are you ready to leave your worries behind?</h2>
-                        <Input 
+                        <Input
                             placeholder="Up to 15 days"
                             type="number"
                             max={15}
@@ -188,9 +189,16 @@ function CreateTrip() {
                 <Button
                     onClick={OnGenerateTrip}
                     disabled={loading}
-                    className="absolute bottom-0 right-0 bg-[#7139f4] hover:bg-[#4a2997] text-white px-6 py-3 shadow-lg"
+                    className="absolute bottom-0 right-0 bg-[#7139f4] hover:bg-[#4a2997] text-white px-6 py-3 shadow-lg flex items-center gap-2"
                 >
-                    {loading ? <AiOutlineLoading3Quarters className="h-6 w-6 animate-spin" /> : 'Generate Trip'}
+                    {loading ? (
+                        <AiOutlineLoading3Quarters className="h-6 w-6 animate-spin" />
+                    ) : (
+                        <>
+                            <SiGooglegemini className="h-5 w-5" />
+                            <span>Generate Trip</span>
+                        </>
+                    )}
                 </Button>
             </div>
 

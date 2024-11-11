@@ -7,6 +7,7 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/service/firebaseConfig';
 import { toast } from 'sonner';
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 function UserTripCard({ trip, onDelete }) {
   const [photoUrl, setPhotoUrl] = useState();
@@ -75,11 +76,11 @@ function UserTripCard({ trip, onDelete }) {
             <h3 className="text-lg font-bold mb-4">Confirm Deletion</h3>
             <p className="mb-4">Are you sure you want to delete this trip?</p>
             <div className="flex justify-end">
-              <Button onClick={cancelDelete} className="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-700">
-                Cancel
+              <Button onClick={cancelDelete} className="mr-2 bg-gray-300 text-black hover:bg-gray-300 hover:border-white">
+              <IoIosCloseCircleOutline/> Cancel
               </Button>
-              <Button onClick={confirmDelete} className="bg-red-600 hover:bg-red-800 text-white">
-                Delete
+              <Button onClick={confirmDelete} className="bg-red-600 hover:bg-red-800 text-white hover:border-white">
+              <MdDelete /> Delete
               </Button>
             </div>
           </div>

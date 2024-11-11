@@ -5,6 +5,7 @@ import { useNavigation } from 'react-router-dom';
 import UserTripCard from './components/UserTripCard';
 import { Search } from 'lucide-react';
 
+
 function MyTrips() {
   const navigation = useNavigation();
   const [userTrips, setUserTrips] = useState([]);
@@ -49,7 +50,7 @@ function MyTrips() {
   return (
     <div className='sm:px-10 md:px-55 lg:px-95 xl:px-100 px-5 mt-10'>
       <div className='flex justify-between items-center mb-8'>
-        <h2 className='font-bold text-3xl'>My Trips</h2>
+        <h2 className='font-bold text-3xl'>🌄My Trips</h2>
         <div className='relative'>
           <input
             type="text"

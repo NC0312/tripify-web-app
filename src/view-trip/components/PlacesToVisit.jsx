@@ -11,7 +11,7 @@ function PlacesToVisit({ trip }) {
 
             <div>
                 {trip.tripData?.itinerary.map((item, index) => (
-                    <div className='border border-gray-300 rounded-xl p-3 mt-2 cursor-pointer hover:shadow-md mt-14'>
+                    <div className='border border-gray-300 rounded-xl p-3 cursor-pointer hover:shadow-md mt-14'>
                         {/* <h2 className='font-medium text-lg mt-5'>Day {item.day}</h2> */}
                         <h2 className='font-semibold text-2xl mt-5 mb-5 tracking-wide' style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)' }}>
                             Day <span className='text-[#7139f4] text-4xl font-extrabold'>{item.day}</span>

@@ -18,7 +18,9 @@ import { FcGoogle } from "react-icons/fc";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaHome } from "react-icons/fa";
-
+import { FaSuitcaseRolling } from "react-icons/fa6";
+import { RiLogoutBoxLine } from "react-icons/ri";
+import { SlLogin } from "react-icons/sl";
 
 
 function Header() {
@@ -55,17 +57,20 @@ function Header() {
       <div className='flex items-center w-full'>
         <img src="/tripify-logo.png" alt="logo" className="h-12 w-auto" />
         <a href='/'>
-        <div className='ml-2'>
-          <h2 className='text-3xl font-bold text-black'>Tripify</h2>
-          <h3 className='text-[10px] font-medium text-[#3a1f7a] ml-10 mt-1'>Beyond Destinations</h3>
-        </div>
+          <div className='ml-2'>
+            <h2 className='text-3xl font-bold text-black'>Tripify</h2>
+            <h3 className='text-[10px] font-medium text-[#3a1f7a] ml-10 mt-1'>Beyond Destinations</h3>
+          </div>
         </a>
+
+
         <div className='ml-auto'>
           {
             user && user.picture ? (
               <div className='flex items-center gap-5'>
+                {/* Keep the buttons outside the popover */}
                 <a href='/' target='_self'>
-                <Button variant="outline" className="text-black hover:border-black rounded-full"><FaHome />Home</Button>
+                  <Button variant="outline" className="text-black hover:border-black rounded-full flex items-center gap-2"><FaHome />Home</Button>
                 </a>
 
                 <a href='/create-trip' target="_self">
@@ -73,8 +78,9 @@ function Header() {
                 </a>
 
                 <a href='/my-trips' target="_self">
-                  <Button variant="outline" className="text-black hover:border-black rounded-full">My Trips</Button>
+                  <Button variant="outline" className="text-black hover:border-black rounded-full"><FaSuitcaseRolling /> Saved Trips</Button>
                 </a>
+
 
                 <Popover>
                   <PopoverTrigger asChild>
@@ -82,20 +88,47 @@ function Header() {
                       <img className="h-[40px] w-[40px] rounded-full" src={user.picture} alt={user.name} />
                     </button>
                   </PopoverTrigger>
-                  <PopoverContent className="hover:cursor-pointer hover:bg-[#D9D9D9]">
-                    <h2 onClick={() => {
-                      googleLogout();
-                      localStorage.clear();
-                      window.location.reload();
-                    }}>Logout</h2>
+                  <PopoverContent className="bg-[#D9D9D9] hover:cursor-pointer p-4 rounded-lg flex flex-col gap-2">
+                    {/* Duplicate of links inside the popover */}
+                    <a href='/' target='_self' className="w-full">
+                      <Button variant="outline" className="text-black hover:text-gray-700 rounded-full w-full flex justify-center items-center">
+                        <FaHome className="mr-2" />Home
+                      </Button>
+                    </a>
+                    <a href='/create-trip' target="_self" className="w-full">
+                      <Button variant="outline" className="text-black hover:text-gray-700 rounded-full w-full">
+                        + Create Trip
+                      </Button>
+                    </a>
+                    <a href='/my-trips' target="_self" className="w-full">
+                      <Button variant="outline" className="text-black hover:text-gray-700 rounded-full w-full">
+                      <FaSuitcaseRolling /> Saved Trips
+                      </Button>
+                    </a>
+
+                    <Button
+                      variant="outline"
+                      className="text-black hover:text-gray-700 rounded-full w-full"
+                      onClick={() => {
+                        googleLogout();
+                        localStorage.clear();
+                        window.location.reload();
+                      }}
+                    >
+                     <RiLogoutBoxLine /> Logout
+                    </Button>
                   </PopoverContent>
                 </Popover>
+
               </div>
             ) : (
-              <Button className="bg-[#7139f4] hover:bg-[#4a2997]" onClick={() => setOpenDailog(true)}>Sign In</Button>
+              <Button className="bg-[#7139f4] hover:bg-[#4a2997]" onClick={() => setOpenDailog(true)}><SlLogin/> Login</Button>
             )
           }
         </div>
+
+
+
         <Dialog open={openDailog}>
           <DialogContent>
             <DialogHeader>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
+import { FaPaperPlane } from "react-icons/fa";
 
 function Hero() {
   const images = [
@@ -41,7 +42,7 @@ function Hero() {
         </p>
 
         <Link to={'/create-trip'}>
-          <Button className="bg-[#7139f4] hover:bg-[#4a2997]">Start Your Adventure!</Button>
+          <Button className="bg-[#7139f4] hover:bg-[#4a2997]"><FaPaperPlane /> Start Your Adventure!</Button>
         </Link>
       </div>
 

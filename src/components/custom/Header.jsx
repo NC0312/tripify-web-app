@@ -21,12 +21,15 @@ import { FaHome } from "react-icons/fa";
 import { FaSuitcaseRolling } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { SlLogin } from "react-icons/sl";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 
 function Header() {
   const user = JSON.parse(localStorage.getItem('user'));
 
   const [openDailog, setOpenDailog] = useState(false);
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+
 
   useEffect(() => {
     console.log(user);
@@ -49,6 +52,12 @@ function Header() {
       setOpenDailog(false);
       window.location.reload();
     })
+  }
+
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.clear();
+    window.location.reload();
   }
 
 
@@ -102,30 +111,45 @@ function Header() {
                     </a>
                     <a href='/my-trips' target="_self" className="w-full">
                       <Button variant="outline" className="text-black hover:text-gray-700 rounded-full w-full">
-                      <FaSuitcaseRolling /> Saved Trips
+                        <FaSuitcaseRolling /> Saved Trips
                       </Button>
                     </a>
 
                     <Button
                       variant="outline"
                       className="text-black hover:text-gray-700 rounded-full w-full"
-                      onClick={() => {
-                        googleLogout();
-                        localStorage.clear();
-                        window.location.reload();
-                      }}
+                      onClick={() => setOpenLogoutDialog(true)} // Open the confirmation dialog
                     >
-                     <RiLogoutBoxLine /> Logout
+                      <RiLogoutBoxLine /> Logout
                     </Button>
                   </PopoverContent>
                 </Popover>
 
               </div>
             ) : (
-              <Button className="bg-[#7139f4] hover:bg-[#4a2997]" onClick={() => setOpenDailog(true)}><SlLogin/> Login</Button>
+              <Button className="bg-[#7139f4] hover:bg-[#4a2997]" onClick={() => setOpenDailog(true)}><SlLogin /> Login</Button>
             )
           }
         </div>
+
+
+        {/* Logout Confirmation Dialog */}
+        <Dialog open={openLogoutDialog}>
+          <DialogContent className="max-w-xs">
+            <DialogHeader>
+              <DialogTitle>Confirm Logout</DialogTitle>
+              <DialogDescription>
+                <p>Are you sure you want to log out?</p>
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex justify-around mt-4">
+              <Button variant="outline" onClick={() => setOpenLogoutDialog(false)}><IoIosCloseCircleOutline/> Cancel</Button>
+              <Button className="bg-[#713f94] text-white hover:bg-[#562976]" onClick={handleLogout}><RiLogoutBoxLine /> Logout</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+
 
 
 

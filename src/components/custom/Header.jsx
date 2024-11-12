@@ -62,13 +62,26 @@ function Header() {
 
 
   return (
-    <div className='p-3 shadow-sm flex flex-col items-start justify-between px-5 w-full'>
-      <div className='flex items-center w-full'>
+    <div
+      className={`p-3 shadow-sm flex flex-col items-start justify-between px-5 w-full ${process.env.REACT_APP_ENV === 'development' ? 'bg-[#3a1f7a]' : ''
+        }`}
+    >
+      <div className="flex items-center w-full">
         <img src="/tripify-logo.png" alt="logo" className="h-12 w-auto" />
-        <a href='/'>
-          <div className='ml-2'>
-            <h2 className='text-3xl font-bold text-black'>Tripify</h2>
-            <h3 className='text-[10px] font-medium text-[#3a1f7a] ml-10 mt-1'>Beyond Destinations</h3>
+        <a href="/">
+          <div className="ml-2">
+            <h2
+              className={`text-3xl font-bold ${process.env.REACT_APP_ENV === 'development' ? 'text-white' : 'text-black'
+                }`}
+            >
+              Tripify
+            </h2>
+            <h3
+              className={`text-[10px] font-medium ml-10 mt-1 ${process.env.REACT_APP_ENV === 'development' ? 'text-white' : 'text-[#3a1f7a]'
+                }`}
+            >
+              Beyond Destinations
+            </h3>
           </div>
         </a>
 
@@ -143,7 +156,7 @@ function Header() {
               </DialogDescription>
             </DialogHeader>
             <div className="flex justify-around mt-4">
-              <Button variant="outline" onClick={() => setOpenLogoutDialog(false)}><IoIosCloseCircleOutline/> Cancel</Button>
+              <Button variant="outline" onClick={() => setOpenLogoutDialog(false)}><IoIosCloseCircleOutline /> Cancel</Button>
               <Button className="bg-[#713f94] text-white hover:bg-[#562976]" onClick={handleLogout}><RiLogoutBoxLine /> Logout</Button>
             </div>
           </DialogContent>

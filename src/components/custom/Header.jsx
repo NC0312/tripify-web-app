@@ -63,7 +63,7 @@ function Header() {
 
   return (
     <div
-      className={`p-3 shadow-sm flex flex-col items-start justify-between px-5 w-full ${import.meta.env.VITE_APP_ENV === 'development' ? 'bg-[#3a1f7a]' : ''
+      className={`p-3 shadow-sm flex flex-col items-start justify-between px-5 w-full ${import.meta.env.VITE_APP_ENV === 'development' ? 'bg-[#125c26]' : 'bg-[#3a1f7a]'
         }`}
     >
       <div className="flex items-center w-full">
@@ -71,13 +71,13 @@ function Header() {
         <a href="/">
           <div className="ml-2">
             <h2
-              className={`text-3xl font-bold ${import.meta.env.VITE_APP_ENV === 'development' ? 'text-white' : 'text-black'
+              className={`text-3xl font-bold ${import.meta.env.VITE_APP_ENV === 'development' ? 'text-white' : 'text-white'
                 }`}
             >
               Tripify
             </h2>
             <h3
-              className={`text-[10px] font-medium ml-10 mt-1 ${import.meta.env.VITE_APP_ENV === 'development' ? 'text-white' : 'text-[#3a1f7a]'
+              className={`text-[10px] font-medium ml-10 mt-1 ${import.meta.env.VITE_APP_ENV === 'development' ? 'text-white' : 'text-white'
                 }`}
             >
               Beyond Destinations

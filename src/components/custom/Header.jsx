@@ -22,6 +22,7 @@ import { FaSuitcaseRolling } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { SlLogin } from "react-icons/sl";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { FaKeyboard } from "react-icons/fa";
 
 
 function Header() {
@@ -84,6 +85,13 @@ function Header() {
             </h3>
           </div>
         </a>
+
+        {/* Development mode heading */}
+        {import.meta.env.VITE_APP_ENV === 'development' && (
+          <h2 className="text-white text-xl font-semibold mx-auto flex items-center gap-3">
+            Development Mode <FaKeyboard />
+          </h2>
+        )}
 
 
         <div className='ml-auto'>

@@ -7,20 +7,21 @@ function PlacesToVisit({ trip }) {
     const [convertedBudget, setConvertedBudget] = useState(0);
     const [selectedCurrency, setSelectedCurrency] = useState('USD');
 
-    // Mock conversion rates; replace with API data in production
+
     const currencyRates = {
         USD: { rate: 1, symbol: '$' },
         EUR: { rate: 0.85, symbol: '€' },
-        GBP: { rate: 0.75, symbol: '£' },
+        GBP: { rate: 0.75, symbol: '£' }, // Added Pounds
         INR: { rate: 74, symbol: '₹' },
         JPY: { rate: 110, symbol: '¥' },
         AUD: { rate: 1.35, symbol: 'A$' },
-        AED: { rate: 3.67, symbol: 'د.إ' },
-        THB: { rate: 33, symbol: '฿' },
-        PKR: { rate: 176, symbol: '₨' },
-        IDR: { rate: 14300, symbol: 'Rp' },
-        MYR: { rate: 4.18, symbol: 'RM' },
-        SGD: { rate: 1.36, symbol: 'S$' },
+        AED: { rate: 3.67, symbol: 'د.إ' }, // Added Dirham (AED)
+        THB: { rate: 33.5, symbol: '฿' }, // Added Baht (THB)
+        PKR: { rate: 290, symbol: '₨' }, // Added Pakistan Rupee (PKR)
+        IDR: { rate: 15300, symbol: 'Rp' }, // Added Indonesian Rupee (IDR)
+        MYR: { rate: 4.5, symbol: 'RM' }, // Added Ringgit (MYR)
+        SGD: { rate: 1.35, symbol: 'S$' }, // Added Singapore Dollar (SGD)
+        CAD: { rate: 1.36, symbol: 'CA$' }, // Added Canadian Dollar (CAD)
     };
 
     // Helper function to parse cost strings and detect currency

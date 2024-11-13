@@ -4,6 +4,24 @@ import PlaceItem from './PlaceItem';
 function PlacesToVisit({ trip }) {
     const [estimatedBudget, setEstimatedBudget] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('$'); // Default to USD
+    const [convertedBudget, setConvertedBudget] = useState(0);
+    const [selectedCurrency, setSelectedCurrency] = useState('USD');
+
+    // Mock conversion rates; replace with API data in production
+    const currencyRates = {
+        USD: { rate: 1, symbol: '$' },
+        EUR: { rate: 0.85, symbol: '€' },
+        GBP: { rate: 0.75, symbol: '£' },
+        INR: { rate: 74, symbol: '₹' },
+        JPY: { rate: 110, symbol: '¥' },
+        AUD: { rate: 1.35, symbol: 'A$' },
+        AED: { rate: 3.67, symbol: 'د.إ' },
+        THB: { rate: 33, symbol: '฿' },
+        PKR: { rate: 176, symbol: '₨' },
+        IDR: { rate: 14300, symbol: 'Rp' },
+        MYR: { rate: 4.18, symbol: 'RM' },
+        SGD: { rate: 1.36, symbol: 'S$' },
+    };
 
     // Helper function to parse cost strings and detect currency
     const parseCost = (costString) => {
@@ -11,19 +29,9 @@ function PlacesToVisit({ trip }) {
             return 0; // Treat 'Free' and 'Varies' as zero cost
         }
 
-        // Detect currency symbol (assuming the symbol is at the beginning)
-        const detectedCurrency = costString.match(/^[₹$€£¥]/);
-        if (detectedCurrency) {
-            const symbol = detectedCurrency[0];
-            if (currencySymbol === '$') { // Only set if default symbol to avoid multiple currencies
-                setCurrencySymbol(symbol);
-            }
-        }
-
-        // Match single or range values and convert to numbers
         const match = costString.match(/\$?₹?€?£?¥?(\d+)(?:\s*-\s*\$?₹?€?£?¥?(\d+))?/);
         if (match) {
-            const [ , low, high ] = match.map(Number);
+            const [, low, high] = match.map(Number);
             return high ? (low + high) / 2 : low; // Return average if range, otherwise single value
         }
 
@@ -32,24 +40,31 @@ function PlacesToVisit({ trip }) {
 
     useEffect(() => {
         if (trip) {
-            // Calculate hotel budget: sum up all hotel prices (averaging if range)
             const hotelBudget = trip.tripData?.hotels.reduce((sum, hotel) => {
                 return sum + parseCost(hotel.price);
             }, 0);
 
-            // Calculate activity budget: sum up all ticket prices from places in the itinerary
             const activityBudget = trip.tripData?.itinerary.reduce((total, item) => {
                 return total + item.plan.reduce((sum, place) => sum + parseCost(place.ticketPricing), 0);
             }, 0);
 
-            // Set the total estimated budget
             setEstimatedBudget(hotelBudget + activityBudget);
+            setConvertedBudget(hotelBudget + activityBudget); // Initialize with USD budget
         }
-    }, [trip, currencySymbol]);
+    }, [trip]);
+
+    // Handle currency conversion
+    const handleConvertCurrency = () => {
+        const { rate, symbol } = currencyRates[selectedCurrency];
+        if (rate) {
+            setConvertedBudget((estimatedBudget * rate).toFixed(2));
+            setCurrencySymbol(symbol);
+        }
+    };
 
     return (
         <div>
-            <hr className='mt-12'/>
+            <hr className='mt-12' />
             <h2 className='font-bold text-xl mt-8'>🏙️🎒Epic Escapes: Journey Beyond</h2>
 
             <div>
@@ -71,18 +86,40 @@ function PlacesToVisit({ trip }) {
                 ))}
             </div>
 
-            {/* Display the estimated budget card */}
-            {estimatedBudget > 0 && (
+            {/* Display the estimated budget card with currency conversion */}
+            {convertedBudget > 0 && (
                 <div className="mt-8 mb-6 p-6 bg-[#f4f6fc] rounded-xl shadow-md text-center border border-gray-300">
                     <h3 className="font-semibold text-xl text-[#7139f4]">
                         💰 Estimated Budget for Trip
                     </h3>
                     <p className="text-2xl font-extrabold text-[#3a1f7a] mt-2">
-                        {currencySymbol}{estimatedBudget.toFixed(2)}
+                        {currencySymbol} {convertedBudget}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                         This includes average hotel and activity costs.
                     </p>
+
+                    <div className="mt-4">
+                        <label htmlFor="currency" className="block text-gray-700">Convert to:</label>
+                        <select
+                            id="currency"
+                            value={selectedCurrency}
+                            onChange={(e) => setSelectedCurrency(e.target.value)}
+                            className="mt-1 p-2 border border-gray-300 rounded-md bg-white text-gray-700" // Light background
+                        >
+                            {Object.keys(currencyRates).map((currency) => (
+                                <option key={currency} value={currency}>
+                                    {currencyRates[currency].symbol} - {currency}
+                                </option>
+                            ))}
+                        </select>
+                        <button
+                            onClick={handleConvertCurrency}
+                            className="ml-2 px-4 py-2 bg-[#7139f4] text-white rounded-md"
+                        >
+                            Convert
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

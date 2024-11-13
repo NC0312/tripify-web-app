@@ -29,6 +29,21 @@ function PlacesToVisit({ trip }) {
                         </div>
                     </div>
                 ))}
+
+                {/* Display the estimated budget card */}
+                {trip.tripData?.estimatedBudget && (
+                    <div className="mt-8 mb-6 p-6 bg-[#f4f6fc] rounded-xl shadow-md text-center border border-gray-300">
+                        <h3 className="font-semibold text-xl text-[#7139f4]">
+                            💰 Estimated Budget for Trip
+                        </h3>
+                        <p className="text-2xl font-extrabold text-[#3a1f7a] mt-2">
+                            {trip.tripData?.estimatedBudget}
+                        </p>
+                        <p className="text-sm text-gray-500 mt-1">
+                            This includes average hotel and activity costs.
+                        </p>
+                    </div>
+                )}
             </div>
 
 

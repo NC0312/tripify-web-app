@@ -72,7 +72,7 @@ function PlacesToVisit({ trip }) {
                         💰 Estimated Budget for Trip
                     </h3>
                     <p className="text-2xl font-extrabold text-[#3a1f7a] mt-2">
-                        {currencySymbol} {convertedBudget}
+                    {currencySymbol} {new Intl.NumberFormat('en-IN').format(convertedBudget)}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                         This includes average hotel and activity costs.

@@ -53,6 +53,16 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+@keyframes fadeToColor {
+  0% {
+    background-color: white;
+  }
+  100% {
+    background-color: var(--end-color); /* Final color */
+  }
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

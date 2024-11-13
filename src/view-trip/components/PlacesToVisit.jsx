@@ -3,14 +3,25 @@ import PlaceItem from './PlaceItem';
 
 function PlacesToVisit({ trip }) {
     const [estimatedBudget, setEstimatedBudget] = useState(0);
+    const [currencySymbol, setCurrencySymbol] = useState('$'); // Default to USD
 
-    // Helper function to parse cost strings
+    // Helper function to parse cost strings and detect currency
     const parseCost = (costString) => {
         if (costString.includes("Free") || costString.includes("Varies")) {
             return 0; // Treat 'Free' and 'Varies' as zero cost
         }
 
-        const match = costString.match(/\$?(\d+)(?:\s*-\s*\$?(\d+))?/); // Match single or range values
+        // Detect currency symbol (assuming the symbol is at the beginning)
+        const detectedCurrency = costString.match(/^[₹$€£¥]/);
+        if (detectedCurrency) {
+            const symbol = detectedCurrency[0];
+            if (currencySymbol === '$') { // Only set if default symbol to avoid multiple currencies
+                setCurrencySymbol(symbol);
+            }
+        }
+
+        // Match single or range values and convert to numbers
+        const match = costString.match(/\$?₹?€?£?¥?(\d+)(?:\s*-\s*\$?₹?€?£?¥?(\d+))?/);
         if (match) {
             const [ , low, high ] = match.map(Number);
             return high ? (low + high) / 2 : low; // Return average if range, otherwise single value
@@ -34,7 +45,7 @@ function PlacesToVisit({ trip }) {
             // Set the total estimated budget
             setEstimatedBudget(hotelBudget + activityBudget);
         }
-    }, [trip]);
+    }, [trip, currencySymbol]);
 
     return (
         <div>
@@ -43,14 +54,14 @@ function PlacesToVisit({ trip }) {
 
             <div>
                 {trip?.tripData?.itinerary.map((item, index) => (
-                    <div className='border border-gray-300 rounded-xl px-8 py-5 cursor-pointer hover:shadow-md mt-14'>
+                    <div key={index} className='border border-gray-300 rounded-xl px-8 py-5 cursor-pointer hover:shadow-md mt-14'>
                         <h2 className='font-semibold text-2xl mt-5 mb-5 tracking-wide' style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)' }}>
                             Day <span className='text-[#7139f4] text-4xl font-extrabold'>{item.day}</span>
                         </h2>
 
                         <div className='grid md:grid-cols-2 gap-5'>
-                            {item.plan.map((place, index) => (
-                                <div>
+                            {item.plan.map((place, idx) => (
+                                <div key={idx}>
                                     <h2 className='font-medium text-sm text-[#7139f4]'>{place.bestTime} ({place.timeRange})</h2>
                                     <PlaceItem place={place} />
                                 </div>
@@ -67,7 +78,7 @@ function PlacesToVisit({ trip }) {
                         💰 Estimated Budget for Trip
                     </h3>
                     <p className="text-2xl font-extrabold text-[#3a1f7a] mt-2">
-                        ${estimatedBudget.toFixed(2)}
+                        {currencySymbol}{estimatedBudget.toFixed(2)}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                         This includes average hotel and activity costs.

@@ -22,22 +22,23 @@ export const chatSession = model.startChat({
             role: "user",
             parts: [
                 {
+
                     text: `Generate a detailed travel plan for Location: Las Vegas for 3 days for a couple with a budget-friendly focus. 
 
-                    Please provide the following details:
-                    1. A list of 4-5 hotel options with:
-                       - hotelName, hotelAddress, price, hotelImageUrl, geoCoordinates, rating, description, bestTimeToVisit.
-                    2. An itinerary with day-wise plans. Each day should have:
-                       - day, title, placeName, placeAddress, placeDetails, placeImageUrl, geoCoordinates, ticketPricing, rating, timeToTravel, bestTime, and timeRange (e.g., "09:00 AM - 11:00 AM").
-                       - Ensure each day includes morning, afternoon, and evening activities, and each activity includes 'placeAddress', 'timeToTravel', 'rating', and 'ticketPricing' with meaningful values.
-                    3. Calculate and include an estimated budget for the entire trip as 'estimatedBudget' in local currency.
-                    
-                    For 'estimatedBudget':
-                       - Use the average nightly rate of the suggested hotels.
-                       - Add the total ticket pricing for all activities in the itinerary.
-                       - Format the result as 'estimatedBudget' in JSON.
-                    
-                    Return the response in JSON format.`
+Provide a list of hotel options with the following details:
+- hotelName, hotelAddress, price, hotelImageUrl, geoCoordinates, rating, description, bestTimeToVisit.
+- try to provide 4-5 hotels within given budget range.
+
+Additionally, create an itinerary with day-wise plans, ensuring consistency across entries by including these details for each place:
+- day, title, placeName, placeAddress, placeDetails, placeImageUrl, geoCoordinates, ticketPricing, rating, timeToTravel, bestTime, and timeRange (e.g., "09:00 AM - 11:00 AM").
+
+                    Ensure the following:
+                    - Every day includes a morning, afternoon, and evening time slot with distinct activities.
+                    - Each activity includes the 'placeAddress' field in the response, and the timeRange is provided as a specific time interval.
+                    - 'placeAddress', 'timeToTravel', 'rating', and 'ticketPricing' fields have meaningful, non-empty values across all entries in the itinerary.
+                    - **Important Use the local currency for 'price' and 'ticketPricing' based on the location (e.g., USD for the United States, EUR for Europe , INR for India, Pounds for london, PKR for Pakistan,dirham for dubai, indonsian rupees for indonesia,baht for thailand).
+                    - Format the response in JSON.`
+
                 },
             ],
         },

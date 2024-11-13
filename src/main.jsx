@@ -10,6 +10,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import ViewTrip from './view-trip/[tripId]'
 import Footer from './view-trip/components/Footer'
 import MyTrips from './my-trips'
+import AdminPanel from './admin-panel'
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path:'my-trips',
     element:<MyTrips/>
+  },
+  {
+    path: '/admin-panel', // Random admin route
+    element: <AdminPanel/> // Admin Panel Component
   }
 ])
 

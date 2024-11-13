@@ -7,36 +7,42 @@ function PlacesToVisit({ trip }) {
     const [convertedBudget, setConvertedBudget] = useState(0);
     const [selectedCurrency, setSelectedCurrency] = useState('USD');
 
-
     const currencyRates = {
         USD: { rate: 1, symbol: '$' },
         EUR: { rate: 0.85, symbol: '€' },
-        GBP: { rate: 0.75, symbol: '£' }, // Added Pounds
-        INR: { rate: 74, symbol: '₹' },
+        GBP: { rate: 0.75, symbol: '£' },
+        INR: { rate: 74, symbol: '₹' }, // Conversion rate to USD
         JPY: { rate: 110, symbol: '¥' },
         AUD: { rate: 1.35, symbol: 'A$' },
-        AED: { rate: 3.67, symbol: 'د.إ' }, // Added Dirham (AED)
-        THB: { rate: 33.5, symbol: '฿' }, // Added Baht (THB)
-        PKR: { rate: 290, symbol: '₨' }, // Added Pakistan Rupee (PKR)
-        IDR: { rate: 15300, symbol: 'Rp' }, // Added Indonesian Rupee (IDR)
-        MYR: { rate: 4.5, symbol: 'RM' }, // Added Ringgit (MYR)
-        SGD: { rate: 1.35, symbol: 'S$' }, // Added Singapore Dollar (SGD)
-        CAD: { rate: 1.36, symbol: 'CA$' }, // Added Canadian Dollar (CAD)
+        AED: { rate: 3.67, symbol: 'د.إ' },
+        THB: { rate: 33, symbol: '฿' },
+        PKR: { rate: 168, symbol: '₨' },
+        IDR: { rate: 14350, symbol: 'Rp' },
+        MYR: { rate: 4.17, symbol: 'RM' },
+        SGD: { rate: 1.36, symbol: 'S$' },
+        CAD: { rate: 1.25, symbol: 'CA$' },
     };
 
-    // Helper function to parse cost strings and detect currency
+    // Helper function to parse cost strings and convert to USD
     const parseCost = (costString) => {
         if (costString.includes("Free") || costString.includes("Varies")) {
-            return 0; // Treat 'Free' and 'Varies' as zero cost
+            return 0;
         }
 
-        const match = costString.match(/\$?₹?€?£?¥?(\d+)(?:\s*-\s*\$?₹?€?£?¥?(\d+))?/);
+        const match = costString.match(/(₹|\$|€|£|¥)?(\d+)(?:\s*-\s*(\d+))?/);
         if (match) {
-            const [, low, high] = match.map(Number);
-            return high ? (low + high) / 2 : low; // Return average if range, otherwise single value
+            const [, symbol, low, high] = match;
+            const averageCost = high ? (parseInt(low) + parseInt(high)) / 2 : parseInt(low);
+
+            // Detect currency and convert to USD base
+            let rate = 1;
+            if (symbol) {
+                rate = Object.values(currencyRates).find(rateObj => rateObj.symbol === symbol)?.rate || 1;
+            }
+            return averageCost / rate;
         }
 
-        return 0; // Default to 0 if unable to parse
+        return 0;
     };
 
     useEffect(() => {
@@ -49,8 +55,9 @@ function PlacesToVisit({ trip }) {
                 return total + item.plan.reduce((sum, place) => sum + parseCost(place.ticketPricing), 0);
             }, 0);
 
-            setEstimatedBudget(hotelBudget + activityBudget);
-            setConvertedBudget(hotelBudget + activityBudget); // Initialize with USD budget
+            const totalBudget = hotelBudget + activityBudget;
+            setEstimatedBudget(totalBudget); // Store USD base
+            setConvertedBudget(totalBudget); // Initialize with USD budget
         }
     }, [trip]);
 
@@ -65,14 +72,13 @@ function PlacesToVisit({ trip }) {
 
     return (
         <div>
-              {/* Display the estimated budget card with currency conversion */}
-              {convertedBudget > 0 && (
+            {convertedBudget > 0 && (
                 <div className="mt-8 mb-6 p-6 bg-[#f4f6fc] rounded-xl shadow-md text-center border border-gray-300">
                     <h3 className="font-semibold text-xl text-[#7139f4]">
                         💰 Estimated Budget for Trip
                     </h3>
                     <p className="text-2xl font-extrabold text-[#3a1f7a] mt-2">
-                    {currencySymbol} {new Intl.NumberFormat('en-IN').format(convertedBudget)}
+                        {currencySymbol} {new Intl.NumberFormat('en-IN').format(convertedBudget)}
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                         This includes average hotel and activity costs.
@@ -84,7 +90,7 @@ function PlacesToVisit({ trip }) {
                             id="currency"
                             value={selectedCurrency}
                             onChange={(e) => setSelectedCurrency(e.target.value)}
-                            className="mt-1 p-2 border border-gray-300 rounded-md bg-white text-gray-700" // Light background
+                            className="mt-1 p-2 border border-gray-300 rounded-md bg-white text-gray-700"
                         >
                             {Object.keys(currencyRates).map((currency) => (
                                 <option key={currency} value={currency}>
@@ -105,9 +111,6 @@ function PlacesToVisit({ trip }) {
             <h2 className='font-bold text-xl mt-8'>🏙️🎒Epic Escapes: Journey Beyond</h2>
 
             <div>
-               
-
-
                 {trip?.tripData?.itinerary.map((item, index) => (
                     <div key={index} className='border border-gray-300 rounded-xl px-8 py-5 cursor-pointer hover:shadow-md mt-14'>
                         <h2 className='font-semibold text-2xl mt-5 mb-5 tracking-wide' style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.2)' }}>
@@ -125,8 +128,6 @@ function PlacesToVisit({ trip }) {
                     </div>
                 ))}
             </div>
-
-           
         </div>
     );
 }

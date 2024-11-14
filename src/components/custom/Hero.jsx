@@ -12,6 +12,7 @@ function Hero() {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showAlert, setShowAlert] = useState(true); // Control alert visibility
 
   // Automatically slide images every 2 seconds
   useEffect(() => {
@@ -32,6 +33,13 @@ function Hero() {
 
   return (
     <>
+      {showAlert && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center mb-4 w-full">
+          <strong className="font-bold">Oops! </strong>
+          <span className="block sm:inline">Tripify has run into some problems. We’re working on it. Stay tuned!</span>
+        </div>
+      )}
+      
       <div className='flex flex-col items-center justify-center text-center gap-9'>
         <h3 className='font-extrabold text-[50px] text-center mt-16'>
           <span className='text-[#7139f4]'>Plan your perfect getaway with Tripify:</span> <br />your AI-powered travel companion.

@@ -44,6 +44,23 @@ function CreateTrip() {
         onError: (error) => console.log(error)
     });
 
+    const retryWithBackoff = async (fn, retries = 3, delay = 1000) => {
+        let attempt = 0;
+        while (attempt < retries) {
+            try {
+                return await fn();
+            } catch (error) {
+                if (error.response?.status === 503 && attempt < retries - 1) {
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2; // Exponential backoff
+                } else {
+                    throw error;
+                }
+            }
+            attempt++;
+        }
+    };
+    
     const OnGenerateTrip = async () => {
         const user = localStorage.getItem('user');
         if (!user) {
@@ -58,29 +75,31 @@ function CreateTrip() {
             toast.error("Please make the trip less than 15 days.");
             return;
         }
-
+    
         setLoading(true);
         toast("Our AI is working on it!", {
             description: "Generating your perfect trip...",
             duration: 5000,
         });
-
+    
         const FINAL_PROMPT = AI_PROMPT
             .replace('{location}', formData?.location.label)
             .replace('{totalDays}', formData?.noOfDays)
             .replace('{people}', formData?.people)
             .replace('{budget}', formData?.budget);
-
+    
         try {
-            const result = await chatSession.sendMessage(FINAL_PROMPT);
+            const result = await retryWithBackoff(() => chatSession.sendMessage(FINAL_PROMPT));
             const tripData = await result?.response?.text();
             await SaveAiTrip(tripData);
         } catch (error) {
             console.error("Error generating trip:", error);
+            toast.error("Failed to generate trip. Please try again later.");
         } finally {
             setLoading(false);
         }
     };
+    
 
     const SaveAiTrip = async (TripData) => {
         try {

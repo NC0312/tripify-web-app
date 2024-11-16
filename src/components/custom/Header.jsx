@@ -23,6 +23,7 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import { SlLogin } from "react-icons/sl";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaKeyboard } from "react-icons/fa";
+import { MdAdminPanelSettings } from "react-icons/md";
 
 
 function Header() {
@@ -99,6 +100,9 @@ function Header() {
                 <a href='/' target='_self'>
                   <Button variant="outline" className="text-black hover:border-black rounded-full flex items-center gap-2"><FaHome />Home</Button>
                 </a>
+                <a href='/admin-panel' target="_self">
+                  <Button variant="outline" className="text-black hover:border-black rounded-full"><MdAdminPanelSettings /> Admin Panel</Button>
+                </a>
 
                 <a href='/create-trip' target="_self">
                   <Button variant="outline" className="text-black hover:border-black rounded-full">+ Create Trip</Button>
@@ -120,6 +124,11 @@ function Header() {
                     <a href='/' target='_self' className="w-full">
                       <Button variant="outline" className="text-black hover:text-gray-700 rounded-full w-full flex justify-center items-center">
                         <FaHome className="mr-2" />Home
+                      </Button>
+                    </a>
+                    <a href='/admin-panel' target="_self" className="w-full">
+                      <Button variant="outline" className="text-black hover:text-gray-700 rounded-full w-full">
+                      <MdAdminPanelSettings /> Admin Panel
                       </Button>
                     </a>
                     <a href='/create-trip' target="_self" className="w-full">

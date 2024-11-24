@@ -25,15 +25,17 @@ function PlacesToVisit({ trip }) {
 
     // Helper function to parse cost strings and convert to USD
     const parseCost = (costString) => {
+        if (!costString) return 0; // If costString is undefined or null, return 0
+        
         if (costString.includes("Free") || costString.includes("Varies")) {
             return 0;
         }
-
+    
         const match = costString.match(/(₹|\$|€|£|¥)?(\d+)(?:\s*-\s*(\d+))?/);
         if (match) {
             const [, symbol, low, high] = match;
             const averageCost = high ? (parseInt(low) + parseInt(high)) / 2 : parseInt(low);
-
+    
             // Detect currency and convert to USD base
             let rate = 1;
             if (symbol) {
@@ -41,9 +43,10 @@ function PlacesToVisit({ trip }) {
             }
             return averageCost / rate;
         }
-
+    
         return 0;
     };
+    
 
     useEffect(() => {
         if (trip) {
